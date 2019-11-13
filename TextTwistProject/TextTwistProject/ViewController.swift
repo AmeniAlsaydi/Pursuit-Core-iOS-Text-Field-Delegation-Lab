@@ -9,7 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
     
     @IBOutlet weak var wordTextField: UITextField!
     @IBOutlet weak var wordLabel: UILabel!
@@ -17,8 +17,8 @@ class ViewController: UIViewController {
     var word = Word.getRandomWord() // generates random word
     var guessedWord = [String]() // this should hold the letters the user enters
     var randomWordAsArray = [String]()
-
-     
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,28 +32,23 @@ class ViewController: UIViewController {
 
 extension ViewController: UITextFieldDelegate {
     
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        print("new edit")
-        
-        // i think we should disable it by checking if the variable randomWordAsArray is empty.. this isnt that simple because the scope of the variable is limited to the function below. im definelty going to have to allow access to this accross the entire code because i will need to add back in the deleted string (aka letter entry" to randomWordAsArray if the user goes back.
-        return true // if this is set to false the user can no longer edit the UITextfeild. it will be disabled
-    }
-    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
         guard var scrambledWord = wordLabel.text else {
-            return false } // so this gives me the word scrambled in the same manner as initially presented to user
+            return false } // so this gives us the word scrambled in the same manner as initially presented to user
         print("This is the word scrambled: \(scrambledWord)") // ✅
         randomWordAsArray = scrambledWord.map(String.init)
         
         let randomWord = word.unscrambled
         print("This is the random word: \(randomWord)")
         
-        // finds the first instance of the entered letter and removes it from the scrambled word
         if randomWordAsArray.isEmpty {
+            view.backgroundColor = .red
             return false
         }
         
+        
+        // finds the first instance of the entered letter and removes it from the scrambled word
         if randomWordAsArray.contains(string) {
             
             let letterIndex = randomWordAsArray.firstIndex(of: string)
@@ -64,19 +59,27 @@ extension ViewController: UITextFieldDelegate {
             guessedWord.append(string)
             
             print("This is your guess so far: \(guessedWord)")
-           
-            if guessedWord.joined(separator:"") == randomWord {
-                print("correct")
-                
-            }
+            
+        }
+        // this is when they delete which means that string == ""
+        if string == "" {
+            randomWordAsArray.append(guessedWord[guessedWord.count - 1])
+            scrambledWord = randomWordAsArray.joined(separator:"")
+            wordLabel.text = scrambledWord
+            
+            print("before removal: \(guessedWord)")
+            let letterIndex = (guessedWord.count - 1)
+            guessedWord.remove(at: letterIndex)
+            print("after removal: \(guessedWord)")
+            
         }
         
-// remove from word and add to another string, once the scambled is empty checkmif the new word is equal to the unscrambled?
-// everytime i call .scrambled it differend
-
-        
-       
-        
+        if guessedWord.joined(separator:"") == randomWord {
+            view.backgroundColor = .green
+            print("correct")
+            
+        }
+          
         print(string) // returns the letter they entered.
         // print(range)
         print("randomeWordArray: \(randomWordAsArray)")
@@ -86,7 +89,7 @@ extension ViewController: UITextFieldDelegate {
 }
 
 
-        
+
 //        for (index,char) in word.unscrambled.enumerated() {
 //            if string == char.description {
 //                // remove from word.scrambled

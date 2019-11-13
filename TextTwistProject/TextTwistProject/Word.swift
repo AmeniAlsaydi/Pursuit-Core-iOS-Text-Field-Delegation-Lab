@@ -1,6 +1,7 @@
 import Foundation
 
 struct Word {
+    
     let unscrambled: String
 
     var scrambled: String {
