@@ -35,6 +35,9 @@
                                 <state key="normal" title="New word">
                                     <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                 </state>
+                                <connections>
+                                    <action selector="newWord:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0lS-0I-iFi"/>
+                                </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter word " textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CNw-2z-HxH">
                                 <rect key="frame" x="111" y="360" width="193" height="34"/>

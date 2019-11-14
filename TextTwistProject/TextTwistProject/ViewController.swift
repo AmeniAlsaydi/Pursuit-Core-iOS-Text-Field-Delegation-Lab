@@ -25,6 +25,19 @@ class ViewController: UIViewController {
         wordLabel.text = word.scrambled
         
     }
+    
+    @IBAction func newWord(_ sender: UIButton) {
+        word = Word.getRandomWord()
+        guessedWord = [String]()
+        randomWordAsArray = [String]()
+        wordLabel.text = word.scrambled
+        
+        wordTextField.text = ""
+
+        view.backgroundColor = .white
+
+    }
+    
 }
 
 extension ViewController: UITextFieldDelegate {
@@ -46,6 +59,9 @@ extension ViewController: UITextFieldDelegate {
             guessedWord.append(string)
             
         }
+        print("guess \(guessedWord)")
+        print(randomWordAsArray)
+        
         
         if string == "" {
             randomWordAsArray.append(guessedWord[guessedWord.count - 1])
